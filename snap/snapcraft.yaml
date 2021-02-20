@@ -9,7 +9,17 @@ description: |
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
+apps:
+  teamviewer:
+    command: teamviewer
+
 parts:
-  my-part:
-    # See 'snapcraft plugins'
+  teamviewer:
     plugin: nil
+    override-build: |
+      wget -q https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+      yes | apt install ./teamviewer_amd64.deb -f
+      apt update
+      apt upgrade
+    build-packages:
+      - wget
